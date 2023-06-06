@@ -126,7 +126,38 @@
 
 
       <label for="item-toner-model">Modelo do Toner:</label>
-      <input type="text" id="item-toner-model" required>
+      <select id="item-toner-model" required>
+        <option value="" disabled selected>Selecione o Modelo do Toner</option>
+        <option value="Modelo 1">310A</option>
+        <option value="Modelo 2">311A</option>
+        <option value="Modelo 3">312A</option>
+        <option value="Modelo 4">313A</option>
+        <option value="Modelo 5">314A</option>
+        <option value="Modelo 6">5010 BK</option>
+        <option value="Modelo 7">5212 Y</option>
+        <option value="Modelo 8">5313 M</option>
+        <option value="Modelo 9">CB 540/320A BK</option>
+        <option value="Modelo 10">CB 543/323 A</option>
+        <option value="Modelo 11">CB 543A / CE 323A / CF 213A</option>
+        <option value="Modelo 12">CE278A</option>
+        <option value="Modelo 13">CE285A / 435A</option>
+        <option value="Modelo 14">CE321</option>
+        <option value="Modelo 15">CF 500A BK</option>
+        <option value="Modelo 16">CF 501A C</option>
+        <option value="Modelo 17">CF 503 A</option>
+        <option value="Modelo 18">CF226A</option>
+        <option value="Modelo 19">CF248A</option>
+        <option value="Modelo 20">MP601</option>
+        <option value="Modelo 21">SP3710</option>
+        <option value="Modelo 22">TK-1122</option>
+        <option value="Modelo 23">TK-1152</option>
+        <option value="Modelo 24">TK-1175</option>
+        <option value="Modelo 25">TK-3102</option>
+        <option value="Modelo 26">TK-3162</option>
+        <option value="Modelo 27">TK-5232 C</option>
+        <option value="Modelo 28">TK-5232K</option>
+        <option value="Modelo 29">TK-5232Y</option>
+      </select>
 
       <label for="item-sender">Quem Enviou:</label>
       <input type="text" id="item-sender" required>
@@ -147,49 +178,3 @@
         <!-- Os itens do estoque serão adicionados aqui dinamicamente -->
       </tbody>
     </table>
-  </div>
-
-  <script>
-    // Obter o formulário e a tabela do estoque
-    var itemForm = document.getElementById('item-form');
-    var stockTableBody = document.querySelector('#stock-table tbody');
-
-    // Adicionar um ouvinte de evento para o envio do formulário
-    itemForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
-
-      // Obter os valores da data, filial, modelo do toner e quem enviou
-      var itemDate = document.getElementById('item-date').value;
-      var itemBranch = document.getElementById('item-branch').value;
-      var itemTonerModel = document.getElementById('item-toner-model').value;
-      var itemSender = document.getElementById('item-sender').value;
-
-      // Criar uma nova linha na tabela do estoque
-      var newRow = document.createElement('tr');
-
-      var itemDateCell = document.createElement('td');
-      itemDateCell.textContent = itemDate;
-      newRow.appendChild(itemDateCell);
-
-      var itemBranchCell = document.createElement('td');
-      itemBranchCell.textContent = itemBranch;
-      newRow.appendChild(itemBranchCell);
-
-      var itemTonerModelCell = document.createElement('td');
-      itemTonerModelCell.textContent = itemTonerModel;
-      newRow.appendChild(itemTonerModelCell);
-
-      var itemSenderCell = document.createElement('td');
-      itemSenderCell.textContent = itemSender;
-      newRow.appendChild(itemSenderCell);
-
-      // Adicionar a nova linha à tabela
-      stockTableBody.appendChild(newRow);
-
-      // Limpar os campos do formulário
-      itemForm.reset();
-    });
-  </script>
-</body>
-</html>
-
