@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Controle de Estoque</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      background-color: #663399;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      border-radius: 5px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    label {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"] {
+      width: calc(50% - 5px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #333;
+    }
+
+    select {
+      width: calc(50% - 5px);
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      color: #333;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Controle de Estoque</h1>
+
+    <form id="item-form">
+      <label for="item-date">Data:</label>
+      <input type="date" id="item-date" required>
+
+      <label for="item-branch">Loja:</label>
+      <select id="item-branch" required>
+        <option value="" disabled selected>Selecione a Filial</option>
+        <option value="P01">P01 (Republica)</option>
+        <option value="P02">P02 (JK)</option>
+        <option value="P03">P03 (Cataratas)</option>
+        <option value="P04">P04 (Morumbi)</option>
+        <option value="P05">P05 (Vila A)</option>
+        <option value="P06">P06 (CD)</option>
+        <option value="P07">P07 (Santa Terezinha)</option>
+        <option value="P08">P08 (Porto Meira)</option>
+        <option value="P09">P09 (Medianeira)</option>
+        <option value="P10">P10 (Toledo)</option>
+        <option value="P11">P11 (Soho)</option>
+      </select>
+
+      <label for="item-toner-model">Modelo do Toner:</label>
+      <input type="text" id="item-toner-model" required>
+
+      <label for="item-sender">Quem Enviou:</label>
+      <input type="text" id="item-sender" required>
+
+      <button type="submit">Adicionar Item</button>
+    </form>
+
+    <table id="stock-table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Filial</th>
+          <th>Modelo do Toner</th>
+          <th>Quem Enviou</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Os itens do estoque serão adicionados aqui dinamicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Obter o formulário e a tabela do estoque
+    var itemForm = document.getElementById('item-form');
+    var stockTableBody = document.querySelector('#stock-table tbody');
+
+    // Adicionar um ouvinte de evento para o envio do formulário
+    itemForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      // Obter os valores da data, filial, modelo do toner e quem enviou
+      var itemDate = document.getElementById('item-date').value;
+      var itemBranch = document.getElementById('item-branch').value;
+      var itemTonerModel = document.getElementById('item-toner-model').value;
+      var itemSender = document.getElementById('item-sender').value;
+
+      // Criar uma nova linha na tabela do estoque
+      var newRow = document.createElement('tr');
+
+      var itemDateCell = document.createElement('td');
+      itemDateCell.textContent = itemDate;
+      newRow.appendChild(itemDateCell);
+
+      var itemBranchCell = document.createElement('td');
+      itemBranchCell.textContent = itemBranch;
+      newRow.appendChild(itemBranchCell);
+
+      var itemTonerModelCell = document.createElement('td');
+      itemTonerModelCell.textContent = itemTonerModel;
+      newRow.appendChild(itemTonerModelCell);
+
+      var itemSenderCell = document.createElement('td');
+      itemSenderCell.textContent = itemSender;
+      newRow.appendChild(itemSenderCell);
+
+      // Adicionar a nova linha à tabela
+      stockTableBody.appendChild(newRow);
+
+      // Limpar os campos do formulário
+      itemForm.reset();
+    });
+  </script>
+</body>
+</html>
