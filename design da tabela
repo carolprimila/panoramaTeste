@@ -51,6 +51,32 @@
       text-align: left;
       border: 1px solid white;
     }
+
+    .sidebar {
+      position: fixed;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar button {
+      width: 150px;
+      height: 40px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .sidebar button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
