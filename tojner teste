@@ -4,59 +4,52 @@
   <title>Estoque de Toner</title>
   <style>
     body {
-      background-color: #000;
-      color: #000;
-      font-size: 14px;
+      background-color: black;
+      color: white;
       font-family: Arial, sans-serif;
     }
 
     .container {
-      max-width: 400px; /* Ajuste o valor para reduzir o tamanho do quadro */
+      max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    form input,
+    form select {
+      margin-top: 5px;
+      padding: 5px;
+    }
+
+    form button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: white;
+      color: black;
+      border: none;
+      cursor: pointer;
     }
 
     table {
+      width: 100%;
+      margin-top: 20px;
       border-collapse: collapse;
-      width: 100%;
     }
 
-    th, td {
+    table th,
+    table td {
+      padding: 10px;
       text-align: left;
-      padding: 8px;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    form {
-      margin-bottom: 2.5rem;
-    }
-
-    input[type="text"], input[type="number"], select {
-      padding: 6px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      width: 100%;
-    }
-
-    button {
-      padding: 6px 12px;
-      border-radius: 4px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 1.5rem;
-      font-size: 14px;
-    }
-
-    button:hover {
-      background-color: #45a049;
+      border: 1px solid white;
     }
   </style>
 </head>
@@ -66,12 +59,10 @@
 
     <form id="tonerForm">
       <label for="dataInput">Data:</label>
-      <input type="text" id="dataInput" placeholder="dd/mm/yyyy" required>
+      <input type="date" id="dataInput">
 
       <label for="lojaInput">Loja:</label>
-      <select id="lojaInput" required>
-        <!-- Opções da loja -->
-        <option value="" disabled selected>Selecione a Filial</option>
+      <select id="lojaInput">
         <option value="P01 (Republica)">P01 (Republica)</option>
         <option value="P02 (JK)">P02 (JK)</option>
         <option value="P03 (Cataratas)">P03 (Cataratas)</option>
@@ -86,8 +77,7 @@
       </select>
 
       <label for="modeloInput">Modelo do Toner:</label>
-      <select id="modeloInput" required>
-        <!-- Opções do modelo -->
+      <select id="modeloInput">
         <option value="" disabled selected>Selecione o Modelo do Toner</option>
         <option value="310A">310A</option>
         <option value="311A">311A</option>
@@ -121,10 +111,13 @@
       </select>
 
       <label for="quantiaInput">Quantia:</label>
-      <input type="number" id="quantiaInput" min="1" max="5" required>
+      <input type="number" id="quantiaInput" min="1" max="5">
 
       <label for="solicitanteInput">Quem Solicitou:</label>
-      <input type="text" id="solicitanteInput" required>
+      <input type="text" id="solicitanteInput">
+
+      <label for="setorInput">Setor:</label>
+      <input type="text" id="setorInput">
 
       <button type="submit">Adicionar</button>
     </form>
@@ -137,52 +130,78 @@
           <th>Modelo do Toner</th>
           <th>Quantia</th>
           <th>Quem Solicitou?</th>
+          <th>Setor</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Linhas da tabela -->
-        <tr>
-          <td>01/06/2023</td>
-          <td>P01 (Republica)</td>
-          <td>310A</td>
-          <td>3</td>
-          <td>João</td>
-        </tr>
-        <tr>
-          <td>02/06/2023</td>
-          <td>P02 (JK)</td>
-          <td>312A</td>
-          <td>2</td>
-          <td>Maria</td>
-        </tr>
       </tbody>
     </table>
   </div>
 
   <script>
-    document.getElementById("tonerForm").addEventListener("submit", function (event) {
+    var tonerDB = [];
+
+    function fillTable() {
+      var tonerTable = document.getElementById("tonerTable");
+      var tbody = tonerTable.getElementsByTagName("tbody")[0];
+      tbody.innerHTML = "";
+
+      for (var i = 0; i < tonerDB.length; i++) {
+        var toner = tonerDB[i];
+        var row = tbody.insertRow();
+
+        var dateCell = row.insertCell();
+        dateCell.textContent = toner.data;
+
+        var lojaCell = row.insertCell();
+        lojaCell.textContent = toner.loja;
+
+        var modeloCell = row.insertCell();
+        modeloCell.textContent = toner.modelo;
+
+        var quantiaCell = row.insertCell();
+        quantiaCell.textContent = toner.quantia;
+
+        var solicitanteCell = row.insertCell();
+        solicitanteCell.textContent = toner.solicitante;
+
+        var setorCell = row.insertCell();
+        setorCell.textContent = toner.setor;
+      }
+    }
+
+    function addToner(event) {
       event.preventDefault();
 
-      var dataInput = document.getElementById("dataInput").value;
-      var lojaInput = document.getElementById("lojaInput").value;
-      var modeloInput = document.getElementById("modeloInput").value;
-      var quantiaInput = document.getElementById("quantiaInput").value;
-      var solicitanteInput = document.getElementById("solicitanteInput").value;
+      var dataInput = document.getElementById("dataInput");
+      var lojaInput = document.getElementById("lojaInput");
+      var modeloInput = document.getElementById("modeloInput");
+      var quantiaInput = document.getElementById("quantiaInput");
+      var solicitanteInput = document.getElementById("solicitanteInput");
+      var setorInput = document.getElementById("setorInput");
 
-      var newRow = document.createElement("tr");
-      newRow.innerHTML = `
-        <td>${dataInput}</td>
-        <td>${lojaInput}</td>
-        <td>${modeloInput}</td>
-        <td>${quantiaInput}</td>
-        <td>${solicitanteInput}</td>
-      `;
+      var toner = {
+        data: dataInput.value,
+        loja: lojaInput.value,
+        modelo: modeloInput.value,
+        quantia: quantiaInput.value,
+        solicitante: solicitanteInput.value,
+        setor: setorInput.value,
+      };
 
-      document.getElementById("tonerTable").getElementsByTagName("tbody")[0].appendChild(newRow);
+      tonerDB.push(toner);
+      fillTable();
 
-      document.getElementById("tonerForm").reset();
-    });
+      dataInput.value = "";
+      lojaInput.value = "";
+      modeloInput.value = "";
+      quantiaInput.value = "";
+      solicitanteInput.value = "";
+      setorInput.value = "";
+    }
+
+    var tonerForm = document.getElementById("tonerForm");
+    tonerForm.addEventListener("submit", addToner);
   </script>
 </body>
 </html>
-
