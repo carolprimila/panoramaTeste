@@ -51,6 +51,32 @@
       text-align: left;
       border: 1px solid white;
     }
+
+    .sidebar {
+      position: fixed;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar button {
+      width: 150px;
+      height: 40px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .sidebar button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -138,70 +164,24 @@
     </table>
   </div>
 
+  <div class="sidebar">
+    <button onclick="envioClick()">Envio</button>
+    <button onclick="recebimentoClick()">Recebimento</button>
+    <button onclick="ligacoesClick()">Ligações</button>
+  </div>
+
   <script>
-    var tonerDB = [];
-
-    function fillTable() {
-      var tonerTable = document.getElementById("tonerTable");
-      var tbody = tonerTable.getElementsByTagName("tbody")[0];
-      tbody.innerHTML = "";
-
-      for (var i = 0; i < tonerDB.length; i++) {
-        var toner = tonerDB[i];
-        var row = tbody.insertRow();
-
-        var dateCell = row.insertCell();
-        dateCell.textContent = toner.data;
-
-        var lojaCell = row.insertCell();
-        lojaCell.textContent = toner.loja;
-
-        var modeloCell = row.insertCell();
-        modeloCell.textContent = toner.modelo;
-
-        var quantiaCell = row.insertCell();
-        quantiaCell.textContent = toner.quantia;
-
-        var solicitanteCell = row.insertCell();
-        solicitanteCell.textContent = toner.solicitante;
-
-        var setorCell = row.insertCell();
-        setorCell.textContent = toner.setor;
-      }
+    function envioClick() {
+      // Lógica para o botão Envio
     }
 
-    function addToner(event) {
-      event.preventDefault();
-
-      var dataInput = document.getElementById("dataInput");
-      var lojaInput = document.getElementById("lojaInput");
-      var modeloInput = document.getElementById("modeloInput");
-      var quantiaInput = document.getElementById("quantiaInput");
-      var solicitanteInput = document.getElementById("solicitanteInput");
-      var setorInput = document.getElementById("setorInput");
-
-      var toner = {
-        data: dataInput.value,
-        loja: lojaInput.value,
-        modelo: modeloInput.value,
-        quantia: quantiaInput.value,
-        solicitante: solicitanteInput.value,
-        setor: setorInput.value,
-      };
-
-      tonerDB.push(toner);
-      fillTable();
-
-      dataInput.value = "";
-      lojaInput.value = "";
-      modeloInput.value = "";
-      quantiaInput.value = "";
-      solicitanteInput.value = "";
-      setorInput.value = "";
+    function recebimentoClick() {
+      // Lógica para o botão Recebimento
     }
 
-    var tonerForm = document.getElementById("tonerForm");
-    tonerForm.addEventListener("submit", addToner);
+    function ligacoesClick() {
+      // Lógica para o botão Ligações
+    }
   </script>
 </body>
 </html>
