@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ligações</title>
+  <title>Envio de Toner</title>
   <style>
     body {
       background-color: black;
@@ -81,115 +81,137 @@
 </head>
 <body>
   <div class="container">
-    <h1>Ligações</h1>
-    <form id="ligacoesForm">
+    <h1>Envio de Toner</h1>
+
+    <form id="tonerForm">
       <label for="dataInput">Data:</label>
       <input type="date" id="dataInput">
 
-      <label for="filialInput">Filial:</label>
-      <input type="text" id="filialInput">
+      <label for="lojaInput">Loja:</label>
+      <select id="lojaInput">
+        <option value="" disabled selected>Selecione a Loja</option>
+        <option value="P01 (Republica)">P01 (Republica)</option>
+        <option value="P02 (JK)">P02 (JK)</option>
+        <option value="P03 (Cataratas)">P03 (Cataratas)</option>
+        <option value="P04 (Morumbi)">P04 (Morumbi)</option>
+        <option value="P05 (Vila A)">P05 (Vila A)</option>
+        <option value="P06 (CD)">P06 (CD)</option>
+        <option value="P07 (Santa Terezinha)">P07 (Santa Terezinha)</option>
+        <option value="P08 (Porto Meira)">P08 (Porto Meira)</option>
+        <option value="P09 (Medianeira)">P09 (Medianeira)</option>
+        <option value="P10 (Toledo)">P10 (Toledo)</option>
+        <option value="P11 (Soho)">P11 (Soho)</option>
+      </select>
 
-      <label>Precisa:</label>
-      <div class="radio-group">
-        <label><input type="radio" name="precisa" value="Sim">Sim</label>
-        <label><input type="radio" name="precisa" value="Não">Não</label>
-      </div>
+      <label for="modeloInput">Modelo do Toner:</label>
+      <select id="modeloInput">
+        <option value="" disabled selected>Selecione o Modelo do Toner</option>
+        <option value="310A">310A</option>
+        <option value="311A">311A</option>
+        <option value="312A">312A</option>
+        <option value="313A">313A</option>
+        <option value="314A">314A</option>
+        <option value="5010 BK">5010 BK</option>
+        <option value="5212 Y">5212 Y</option>
+        <option value="5313 M">5313 M</option>
+        <option value="CB 540/320A BK">CB 540/320A BK</option>
+        <option value="CB 543/323 A">CB 543/323 A</option>
+        <option value="CB 543A / CE 323A / CF 213A">CB 543A / CE 323A / CF 213A</option>
+        <option value="CE278A">CE278A</option>
+        <option value="CE285A / 435A">CE285A / 435A</option>
+        <option value="CE321">CE321</option>
+        <option value="CF 500A BK">CF 500A BK</option>
+        <option value="CF 501A C">CF 501A C</option>
+        <option value="CF 503 A">CF 503 A</option>
+        <option value="CF226A">CF226A</option>
+        <option value="CF248A">CF248A</option>
+        <option value="MP601">MP601</option>
+        <option value="SP3710">SP3710</option>
+        <option value="TK-1122">TK-1122</option>
+        <option value="TK-1152">TK-1152</option>
+        <option value="TK-1175">TK-1175</option>
+        <option value="TK-3102">TK-3102</option>
+        <option value="TK-3162">TK-3162</option>
+        <option value="TK-5232 C">TK-5232 C</option>
+        <option value="TK-5232K">TK-5232K</option>
+        <option value="TK-5232Y">TK-5232Y</option>
+      </select>
 
-      <label for="quemInput">Quem:</label>
-      <input type="text" id="quemInput">
+      <label for="quantiaInput">Quantia:</label>
+      <input type="number" id="quantiaInput" min="1" max="5">
 
-      <button type="button" onclick="submitForm()">Enviar</button>
+      <label for="solicitanteInput">Quem Solicitou:</label>
+      <input type="text" id="solicitanteInput">
+
+      <label for="setorInput">Setor:</label>
+      <input type="text" id="setorInput">
+
+      <button type="button" onclick="adicionarToner()">Adicionar</button>
     </form>
 
-    <table id="ligacoesTable">
+    <table id="tonerTable">
       <thead>
         <tr>
           <th>Data</th>
-          <th>Filial</th>
-          <th>Precisa</th>
-          <th>Quem</th>
+          <th>Loja</th>
+          <th>Modelo do Toner</th>
+          <th>Quantia</th>
+          <th>Quem Solicitou?</th>
+          <th>Setor</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Dados das ligações serão preenchidos aqui dinamicamente -->
       </tbody>
     </table>
   </div>
 
   <div class="sidebar">
+    <a href="file:///C:/Users/TeamInfra/Desktop/ligacoes.html" target="_blank" rel="noopener noreferrer"><button>Ligações</button></a>
     <a href="file:///C:/Users/TeamInfra/Desktop/recebimento.html" target="_blank" rel="noopener noreferrer"><button>Recebimento</button></a>
-    <a href="file:///C:/Users/TeamInfra/Desktop/envio.html" target="_blank" rel="noopener noreferrer"><button>Envio</button></a>
   </div>
 
   <script>
-    function submitForm() {
-      var dataInput = document.getElementById("dataInput");
-      var filialInput = document.getElementById("filialInput");
-      var precisaInputs = document.getElementsByName("precisa");
-      var quemInput = document.getElementById("quemInput");
+    function adicionarToner() {
+      var data = document.getElementById("dataInput").value;
+      var loja = document.getElementById("lojaInput").value;
+      var modelo = document.getElementById("modeloInput").value;
+      var quantia = document.getElementById("quantiaInput").value;
+      var solicitante = document.getElementById("solicitanteInput").value;
+      var setor = document.getElementById("setorInput").value;
 
-      var selectedPrecisa = "";
-      for (var i = 0; i < precisaInputs.length; i++) {
-        if (precisaInputs[i].checked) {
-          selectedPrecisa = precisaInputs[i].value;
-          break;
-        }
-      }
+      if (data && loja && modelo && quantia && solicitante && setor) {
+        var table = document.getElementById("tonerTable").getElementsByTagName("tbody")[0];
+        var row = table.insertRow(table.rows.length);
 
-      if (dataInput.value && filialInput.value && selectedPrecisa && quemInput.value) {
-        var ligacoesTable = document.getElementById("ligacoesTable");
-        var newRow = ligacoesTable.insertRow(-1);
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = data;
 
-        var dataCell = newRow.insertCell(0);
-        var filialCell = newRow.insertCell(1);
-        var precisaCell = newRow.insertCell(2);
-        var quemCell = newRow.insertCell(3);
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = loja;
 
-        dataCell.innerHTML = dataInput.value;
-        filialCell.innerHTML = filialInput.value;
-        precisaCell.innerHTML = selectedPrecisa;
-        quemCell.innerHTML = quemInput.value;
+        var cell3 = row.insertCell(2);
+        cell3.innerHTML = modelo;
 
-        dataInput.value = "";
-        filialInput.value = "";
-        precisaInputs.forEach(function(input) {
-          input.checked = false;
-        });
-        quemInput.value = "";
+        var cell4 = row.insertCell(3);
+        cell4.innerHTML = quantia;
+
+        var cell5 = row.insertCell(4);
+        cell5.innerHTML = solicitante;
+
+        var cell6 = row.insertCell(5);
+        cell6.innerHTML = setor;
+
+        document.getElementById("dataInput").value = "";
+        document.getElementById("lojaInput").value = "";
+        document.getElementById("modeloInput").value = "";
+        document.getElementById("quantiaInput").value = "";
+        document.getElementById("solicitanteInput").value = "";
+        document.getElementById("setorInput").value = "";
       } else {
-        alert("Preencha todos os campos antes de enviar o formulário.");
+        alert("Preencha todos os campos antes de adicionar um toner.");
       }
     }
 
-    function showEnvio() {
-      var ligacoesTable = document.getElementById("ligacoesTable");
-      var rows = ligacoesTable.getElementsByTagName("tr");
-      for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var precisaCell = row.getElementsByTagName("td")[2];
-        var precisaValue = precisaCell.textContent || precisaCell.innerText;
-        if (precisaValue.toLowerCase() === "sim") {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      }
-    }
-
-    function showRecebimento() {
-      var ligacoesTable = document.getElementById("ligacoesTable");
-      var rows = ligacoesTable.getElementsByTagName("tr");
-      for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        var precisaCell = row.getElementsByTagName("td")[2];
-        var precisaValue = precisaCell.textContent || precisaCell.innerText;
-        if (precisaValue.toLowerCase() === "não") {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      }
-    }
   </script>
 </body>
 </html>
