@@ -87,7 +87,20 @@
       <input type="date" id="dataInput">
 
       <label for="filialInput">Filial:</label>
-      <input type="text" id="filialInput">
+      <select id="filialInput">
+        <option value="" disabled selected>Selecione a Loja</option>
+        <option value="P01 (Republica)">P01 (Republica)</option>
+        <option value="P02 (JK)">P02 (JK)</option>
+        <option value="P03 (Cataratas)">P03 (Cataratas)</option>
+        <option value="P04 (Morumbi)">P04 (Morumbi)</option>
+        <option value="P05 (Vila A)">P05 (Vila A)</option>
+        <option value="P06 (CD)">P06 (CD)</option>
+        <option value="P07 (Santa Terezinha)">P07 (Santa Terezinha)</option>
+        <option value="P08 (Porto Meira)">P08 (Porto Meira)</option>
+        <option value="P09 (Medianeira)">P09 (Medianeira)</option>
+        <option value="P10 (Toledo)">P10 (Toledo)</option>
+        <option value="P11 (Soho)">P11 (Soho)</option>
+      </select>
 
       <label>Precisa:</label>
       <div class="radio-group">
@@ -145,10 +158,10 @@
         var precisaCell = newRow.insertCell(2);
         var quemCell = newRow.insertCell(3);
 
-        dataCell.innerHTML = dataInput.value;
-        filialCell.innerHTML = filialInput.value;
-        precisaCell.innerHTML = selectedPrecisa;
-        quemCell.innerHTML = quemInput.value;
+        dataCell.textContent = dataInput.value;
+        filialCell.textContent = filialInput.value;
+        precisaCell.textContent = selectedPrecisa;
+        quemCell.textContent = quemInput.value;
 
         dataInput.value = "";
         filialInput.value = "";
