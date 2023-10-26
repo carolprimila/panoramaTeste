@@ -1,13 +1,13 @@
 <?php
 session_start();
-include 'recebimentoConexao.php';
+include 'envioConexao.php';
 ?>
 <!DOCTYPE html>
-<html Lang="pt-br">
-                    <head>
-    <meta charset="utf-8">
-    <title>TONER - Recebimento</title>
-    <style>
+<html lang="pt-br">
+        <head>
+        <meta charset="utf-8">
+            <title>TONER -  Envio</title>
+            <style>
         /* deixa preto o fundo */
         body {
       background-color: black;
@@ -69,22 +69,24 @@ include 'recebimentoConexao.php';
     </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Controle de Recebimento</h1>
-<?php
-if(isset($_SESSION['msg'])){
-    echo $_SESSION ['msg'];
-    unset ($_SESSION['msg']);
-}
-?>
+           <div class="container">
+            <h1>Controle de Envio</h1>
+            <?php
+            if(isset($_SESSION['msg'])){
+               echo $_SESSION['msg'];
+               unset ($_SESSION['msg']);
+            }
+            ?>
 
-<form method="POST" action="recebimentoProcessa.php">
-    
-         <label >Data: </label>
-         <input type="date" name="data" placeholder="  /  /   "><br>
+            <form method="POST" action="envioProcessa.php">
 
-         <label>Filial: </label>
-         <select name="filial">
+              <script> </script>
+
+            <label >Data: </label>
+            <input type="date" name="data" placeholder="  /  /   "><br>
+
+            <label>Filial: </label>
+            <select name="filial">
         <option value="" disabled selected>Selecione a Filial</option>
         <option value="P01 (Republica)">P01 (Republica)</option>
         <option value="P02 (JK)">P02 (JK)</option>
@@ -100,7 +102,7 @@ if(isset($_SESSION['msg'])){
         <option value="PORTOBELLO SHOP">PORTOBELLO SHOP</option>
       </select>
 
-      <label>Modelo: </label>
+            <label>Modelo: </label>
             <select name="modelo">
         <option value="" disabled selected>Selecione o Modelo do Toner</option>
         <option value="310A BK">310A BK</option>
@@ -112,14 +114,14 @@ if(isset($_SESSION['msg'])){
         <option value="5313 M">5313 M</option>
         <option value="CB 320A BK">CB 320A BK</option>
         <option value="CE 278A">CE 278A</option>
-        <option value="CE 278A / 435A">CE 285A / 435A</option>
-        <option value="CE321">CE321</option>
-        <option value="CE322">CE322</option>
+        <option value="CE 285A / 435A">CE 285A / 435A</option>
+        <option value="CE 321">CE 321</option>
+        <option value="CE 322">CE 322</option>
         <option value="CE 323A">CE 323A</option>
         <option value="CF 248A">CF 248A</option>
         <option value="CF 500A BK">CF 500A BK</option>
         <option value="CF 501A C">CF 501A C</option>
-        <option value="CF 502A Y">CF 502A Y</option>
+        <option value="CF 501A C">CF 502A Y</option>
         <option value="CF 503A M">CF 503A M</option>
         <option value="MP601">MP601</option>
         <option value="SP3710">SP3710</option>
@@ -133,34 +135,42 @@ if(isset($_SESSION['msg'])){
         <option value="TK-5232Y">TK-5232 Y</option>
         <option value="435A/436A/285A/278A">435A/436A/285A/278A</option>
         <option value="D203U">D203U</option>
+      
       </select>
 
-      <label>Quem Reenviou: </label>
-     <input type="text" name="reenvio" placeholder="(Opcional)"><br>
+            <label>Quantia: </label>
+            <input type="number" name="quantia" placeholder="" min="1" max="5"><br>
 
-     <label>Setor: </label>
-     <input type="text" name="setor" placeholder=""><br>
+            <label>Quem Solicitou: </label>
+            <input type="text" name="solicitante" placeholder=""><br>
 
-     <input type="submit" type="button" value="enviar"/>
-    </form>
-</div>
+            <label>Setor: </label>
+            <input type="text" name="setor" placeholder=""><br>
 
-<table id="recebimentotb">
-    <thead>
-        <tr>
-        <th scope="col">Data</th>
-        <th scope="col">Filial</th>
-        <th scope="col">Modelo</th>
-        <th scope="col">Reenvio</th>
-        <th scope="col">Setor</th>
+            <input type="submit" type="button" value="enviar"/>
+
+        </form>
+            </div>
+
+              <!--  Select do banco para carregar as informaõções, alegria  -->
+              <table id="enviotb">
+        <thead>
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Filial</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Quantia</th>
+                    <th scope="col">Quem solicitou?</th>
+                    <th scope="col">Setor</th>
                     
-        </tr>
-      </thead>
-      <?php
+                  
+                </tr>
+            </thead>
+           <?php
                 
                 $sql = "SELECT *
-                    FROM recebimentodb
-                    ORDER BY data  desc, filial, modelo";
+                    FROM enviodb
+                    ORDER BY data  desc, filial, modelo, quantia";
                      $busca = mysqli_query($link, $sql);
 
                      while ($dados = mysqli_fetch_array($busca)) {
@@ -168,7 +178,8 @@ if(isset($_SESSION['msg'])){
                       $data = $dados['data'];
                       $filial = $dados['filial'];
                       $modelo = $dados['modelo'];
-                      $reenvio = $dados['reenvio'];
+                      $quantia = $dados['quantia'];
+                      $solicitante = $dados['solicitante'];
                       $setor = $dados['setor'];
 
                  ?>
@@ -177,13 +188,20 @@ if(isset($_SESSION['msg'])){
           <td><?php echo $data ?></td>
           <td><?php echo $filial ?></td>
           <td><?php echo $modelo ?></td>
-          <td><?php echo $reenvio ?></td>
+          <td><?php echo $quantia ?></td>
+          <td><?php echo $solicitante ?></td>
           <td><?php echo $setor ?></td>
         </tr>
-        
+      
+  
     <?php } ?>
     </tbody>
     </table>
   </div>
-    </body>
+
+  <div>
+  </div>
+
+ <script> </script>
+</body>
 </html>
